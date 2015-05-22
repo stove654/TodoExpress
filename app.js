@@ -14,6 +14,7 @@ var server = require('http').createServer(app);
 
 // use morgan to log requests to the console
 app.use(morgan('dev'));
+app.use('/static', express.static('uploads'));
 
 require('./config/express')(app);
 require('./routes')(app);

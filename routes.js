@@ -9,6 +9,7 @@ module.exports = function(app) {
     app.use('/api/users', require('./api/user'));
     app.use('/api/categories', require('./api/category'));
     app.use('/api/foods', require('./api/food'));
+    app.use('/api/images', require('./api/image'));
 
     app.route('/:url(api|auth)/*')
         .get(function (req, res) {

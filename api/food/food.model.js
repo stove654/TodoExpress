@@ -4,12 +4,13 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 
-var CategorySchema = new Schema({
+var FoodSchema = new Schema({
   name: String,
-  description: String,
+  price: String,
   type: Number,
-  created_at: Date,
-  updated_at: Date
+  food_category_id: Number,
+  image: String,
+  options: Array
 });
 
-module.exports = mongoose.model('Category', CategorySchema);
+module.exports = mongoose.model('Food', FoodSchema);
