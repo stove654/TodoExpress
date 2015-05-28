@@ -29,15 +29,14 @@ exports.getAllFoods = function(req, res) {
   });
 
   return Q.spread([q1, q2], function () {
-    console.log(listCategories, listFoods)
     var result = _.chain(listFoods)
-     .groupBy('food_category_id')
+     .groupBy('foodCategoryId')
      .pairs()
      .map(function (currentItem) {
-      return _.object(_.zip(["food_category_id", "foods"], currentItem));
+      return _.object(_.zip(["foodCategoryCd", "foods"], currentItem));
      })
      .value();
-     res.json({
+    res.json({
        success: true,
        data: result
      });
@@ -64,6 +63,7 @@ exports.show = function(req, res) {
 
 // Creates a new Food in the DB.
 exports.create = function(req, res) {
+  console.log(req.body)
   Food.create(req.body, function(err, food) {
     if(err) { return handleError(res, err); }
     return res.json(201, food);

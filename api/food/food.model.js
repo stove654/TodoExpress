@@ -8,9 +8,24 @@ var FoodSchema = new Schema({
   name: String,
   price: String,
   type: Number,
-  food_category_id: Number,
+  foodCategoryId: String,
   image: String,
-  options: Array
+  imageThumbnail: String,
+  description: String,
+  status: Boolean,
+  options: [
+    {
+      name: String,
+      price: String
+    }
+  ],
+  discounts: [
+    {
+      name: String,
+      amount: String,
+      percent: String
+    }
+  ]
 });
 
 module.exports = mongoose.model('Food', FoodSchema);

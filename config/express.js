@@ -39,6 +39,11 @@ module.exports = function(app) {
     }
   }));
 
+  app.use(function(req, res, next) {
+    res.contentType('application/json');
+    next();
+  });
+
   app.use(session({
     secret: config.secret,
     resave: true,
