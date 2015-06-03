@@ -16,6 +16,7 @@ var Food = require('./food.model');
 
 // Get list of Category
 exports.getAllFoods = function(req, res) {
+
   var listCategories = [];
   var listFoods = [];
 
@@ -27,15 +28,31 @@ exports.getAllFoods = function(req, res) {
     if(err) { return handleError(res, err); }
     listFoods = foods;
   });
-
   return Q.spread([q1, q2], function () {
     var result = _.chain(listFoods)
      .groupBy('foodCategoryId')
      .pairs()
      .map(function (currentItem) {
-      return _.object(_.zip(["foodCategoryCd", "foods"], currentItem));
+      return _.object(_.zip(["foodCategoryId", "foods"], currentItem));
      })
      .value();
+
+
+    for (var i = 0; i < result.length; i++) {
+      var name = _.result(_.find(listFoods, function(chr) {
+        return chr.foodCategoryId == result[i].foodCategoryId;
+      }), 'name');
+      if (!name) {
+        name = 'uncategory';
+      }
+      for (var j = 0; j < listCategories.length; j++) {
+        if (result[i].foodCategoryId == listCategories[j]._id) {
+          result[i].name = listCategories[j].name;
+          break
+        }
+      }
+    }
+
     res.json({
        success: true,
        data: result
@@ -43,6 +60,7 @@ exports.getAllFoods = function(req, res) {
   })
   .done();
 };
+
 
 // Get list of Food
 exports.index = function(req, res) {
@@ -63,7 +81,6 @@ exports.show = function(req, res) {
 
 // Creates a new Food in the DB.
 exports.create = function(req, res) {
-  console.log(req.body)
   Food.create(req.body, function(err, food) {
     if(err) { return handleError(res, err); }
     return res.json(201, food);

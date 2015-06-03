@@ -11,6 +11,7 @@
 
 var _ = require('lodash');
 var Category = require('./category.model');
+var check = require('./category.service');
 
 // Get list of Category
 exports.index = function(req, res) {
@@ -31,10 +32,18 @@ exports.show = function(req, res) {
 
 // Creates a new Category in the DB.
 exports.create = function(req, res) {
-  Category.create(req.body, function(err, category) {
-    if(err) { return handleError(res, err); }
-    return res.json(201, category);
-  });
+  if (check.isCreatCategory(req.body)) {
+    Category.create(req.body, function(err, category) {
+      if(err) { return handleError(res, err); }
+      return res.json(201, category);
+    });
+  } else {
+    return res.json({
+      success: false,
+      message: 'create category false!'
+    });
+  }
+
 };
 
 // Updates an existing Category in the DB.
