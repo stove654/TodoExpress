@@ -9,7 +9,16 @@ var CategorySchema = new Schema({
   description: String,
   type: Number,
   created_at: Date,
-  updated_at: Date
+  updated_at: Date,
+  children: [
+    {
+      name: String,
+      description: String,
+      type: Number,
+      created_at: Date,
+      updated_at: Date
+    }
+  ]
 });
 
 module.exports = mongoose.model('Category', CategorySchema);
