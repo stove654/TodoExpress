@@ -1,0 +1,54 @@
+/**
+ * Express configuration
+ */
+
+'use strict';
+
+
+var compression = require('compression');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+var cookieParser = require('cookie-parser');
+var config = require('./config.js');
+var passport = require('passport');
+var session = require('express-session');
+var mongoStore = require('connect-mongo')(session);
+var mongoose = require('mongoose');
+var cors = require('cors');
+var multer  = require('multer');
+module.exports = function(app) {
+
+  app.use(cors());
+  app.use(compression());
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
+  app.use(methodOverride());
+  app.use(cookieParser());
+  app.use(passport.initialize());
+
+  var done=false;
+  app.use(multer({ dest: './uploads/',
+    rename: function (fieldname, filename) {
+      console.log(filename);
+      return filename;
+    },
+    onFileUploadStart: function (file) {
+    },
+    onFileUploadComplete: function (file) {
+      done=true;
+    }
+  }));
+
+  app.use(function(req, res, next) {
+    res.contentType('application/json');
+    next();
+  });
+
+  app.use(session({
+    secret: config.secret,
+    resave: true,
+    saveUninitialized: true,
+    store: new mongoStore({ mongoose_connection: mongoose.connection })
+  }));
+
+};
