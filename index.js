@@ -20,7 +20,9 @@ app.use('/static', express.static('uploads'));
 require('./config/express')(app);
 require('./routes')(app);
 
-
+app.get('/', function(request, response) {
+    response.send('Hello World!');
+});
 server.listen(function () {
     console.log('HotTab server listening on port: ');
 });
