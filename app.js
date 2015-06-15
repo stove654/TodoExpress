@@ -11,7 +11,11 @@ var port = process.env.PORT || 8080;
 mongoose.connect(config.database);
 
 var server = require('http').createServer(app);
-
+var socketio = require('socket.io')(server, {
+    serveClient: (config.env === 'production') ? false : true,
+    path: '/socket.io-client'
+});
+require('./config/socketio')(socketio);
 
 // use morgan to log requests to the console
 app.use(morgan('dev'));
