@@ -14,6 +14,7 @@ module.exports = function(app) {
     app.use('/api/discounts', require('./api/discount'));
     app.use('/api/tables', require('./api/table'));
     app.use('/api/orders', require('./api/order'));
+    app.use('/api/things', require('./api/thing'));
 
     app.route('/:url(api|auth)/*')
         .get(function (req, res) {

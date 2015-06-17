@@ -12,6 +12,10 @@ mongoose.connect(config.database);
 
 var server = require('http').createServer(app);
 
+var socketio = require('socket.io')(server, {
+    path: '/socket.io-client'
+});
+require('./config/socketio')(socketio);
 
 // use morgan to log requests to the console
 app.use(morgan('dev'));
