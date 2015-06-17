@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var config = require('./config/config');
 
 // set port
-//var port = process.env.PORT || 8080;
+var port = process.env.PORT || 8080;
 
 // Connect to database
 mongoose.connect(config.database);
@@ -23,7 +23,7 @@ require('./routes')(app);
 app.get('/', function(request, response) {
     response.send('Hello World!');
 });
-server.listen(function () {
-    console.log('HotTab server listening on port: ');
+server.listen(port, function () {
+    console.log('HotTab server listening on port: ', port);
 });
 
