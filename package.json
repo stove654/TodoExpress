@@ -36,7 +36,7 @@
     "lodash": "^3.8.0",
     "m": "^1.0.1",
     "method-override": "^2.3.3",
-    "mongoose": "^4.0.2",
+    "mongoose": "4.0.2",
     "morgan": "^1.5.2",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",
